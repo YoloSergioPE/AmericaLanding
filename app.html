@@ -52,7 +52,6 @@ body {
 
 .header img {
   width: 42px;
-  height: auto;
 }
 
 .header h1 {
@@ -69,15 +68,6 @@ body {
   margin-bottom: 24px;
 }
 
-.nav::-webkit-scrollbar {
-  height: 6px;
-}
-
-.nav::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-}
-
 .nav-btn {
   min-width: 140px;
   background: var(--card);
@@ -91,12 +81,6 @@ body {
 
 .nav-btn img {
   width: 48px;
-  margin-bottom: 10px;
-}
-
-.nav-btn span {
-  display: block;
-  font-size: 0.9rem;
 }
 
 .nav-btn.active,
@@ -116,11 +100,12 @@ body {
   padding: 26px;
   box-shadow: 0 10px 35px rgba(0,0,0,0.45);
 }
-/* VIDEO CONTENEDOR (CRÍTICO) */
+
+/* VIDEO */
 .video-box {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* 16:9 */
+  padding-top: 56.25%;
   border-radius: 14px;
   overflow: hidden;
   background: #020617;
@@ -135,34 +120,28 @@ body {
   border: 0;
 }
 
-/* SOCIAL BAR */
+/* SOCIAL */
+.social-title {
+  margin-top: 28px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
 .social-bar {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  margin-top: 24px;
-  padding-bottom: 10px;
-}
-
-.social-bar::-webkit-scrollbar {
-  height: 6px;
-}
-
-.social-bar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
 }
 
 .social-btn {
-  min-width: 150px;          /* antes 120px */
-  height: 120px;             /* altura fija para uniformidad */
-  background: rgba(255,255,255,0.08);
+  min-width: 150px;
+  height: 120px;
   border-radius: 18px;
   padding: 16px;
   text-align: center;
   text-decoration: none;
   color: var(--text);
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,67 +150,21 @@ body {
   transition: all .2s ease;
 }
 
-
 .social-btn img {
   width: 42px;
   height: 42px;
   object-fit: contain;
 }
 
-
-.social-btn span {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
+.social-btn.facebook { background: rgba(59,130,246,.15); }
+.social-btn.youtube { background: rgba(239,68,68,.15); }
+.social-btn.kick     { background: rgba(34,197,94,.15); }
+.social-btn.twitch   { background: rgba(168,85,247,.15); }
 
 .social-btn:hover {
   transform: translateY(-2px);
 }
 
-.social-title {
-  margin-top: 28px;
-  margin-bottom: 12px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text);
-  opacity: 0.9;
-}
-/* FACEBOOK */
-.social-btn.facebook {
-  background: rgba(59, 130, 246, 0.15); /* azul claro */
-}
-
-.social-btn.facebook:hover {
-  background: rgba(59, 130, 246, 0.35);
-}
-
-/* YOUTUBE */
-.social-btn.youtube {
-  background: rgba(239, 68, 68, 0.15); /* rojo claro */
-}
-
-.social-btn.youtube:hover {
-  background: rgba(239, 68, 68, 0.35);
-}
-
-/* KICK */
-.social-btn.kick {
-  background: rgba(34, 197, 94, 0.15); /* verde claro */
-}
-
-.social-btn.kick:hover {
-  background: rgba(34, 197, 94, 0.35);
-}
-
-/* TWITCH */
-.social-btn.twitch {
-  background: rgba(168, 85, 247, 0.15); /* morado claro */
-}
-
-.social-btn.twitch:hover {
-  background: rgba(168, 85, 247, 0.35);
-}
 /* POLL */
 .poll {
   display: flex;
@@ -247,36 +180,17 @@ body {
   padding: 14px;
   color: var(--text);
   cursor: pointer;
-  font-size: 1rem;
-  transition: background .2s ease;
 }
 
-.poll button:hover {
-  background: var(--primary);
-}
-
-/* RESULTS */
 .poll-results {
   margin-top: 24px;
-}
-
-.result-bar {
-  margin-bottom: 12px;
-}
-
-.result-label {
-  font-size: 0.85rem;
-  margin-bottom: 4px;
 }
 
 .result-fill {
   height: 14px;
   border-radius: 8px;
   background: var(--primary);
-  width: 0%;
-  transition: width .3s ease;
 }
-
 </style>
 </head>
 
@@ -295,80 +209,54 @@ body {
     <div class="nav-btn active" onclick="loadView('home', this)">
       <img src="assets/icons/concurso.png">
     </div>
-
     <div class="nav-btn" onclick="loadView('crear', this)">
       <img src="assets/icons/cuenta.png">
     </div>
-
     <div class="nav-btn" onclick="loadView('retiro', this)">
       <img src="assets/icons/retiro.png">
-    </div>
-
-    <div class="nav-btn">
-      <img src="assets/icons/mobile.png">
-    </div>
-
-    <div class="nav-btn">
-      <img src="assets/icons/live.png">
     </div>
   </div>
 
   <div id="view-container"></div>
 
-</div>
-<!-- TÍTULO REDES -->
   <h3 class="social-title">Mis redes mi dey</h3>
-
-  <!-- BARRA DE REDES -->
   <div class="social-bar">
-    <a href="https://www.facebook.com/americaesportsdota2"
-       target="_blank"
-       class="social-btn facebook">
-      <img src="assets/icons/facebook.png" alt="Facebook">
-      <span>Facebook</span>
+    <a class="social-btn facebook" href="https://www.facebook.com/americaesportsdota2" target="_blank">
+      <img src="assets/icons/facebook.png"><span>Facebook</span>
     </a>
-
-    <a href="https://www.youtube.com/@americaesportsdota2"
-       target="_blank"
-       class="social-btn youtube">
-      <img src="assets/icons/youtube.png" alt="YouTube">
-      <span>YouTube</span>
+    <a class="social-btn youtube" href="https://www.youtube.com/@americaesportsdota2" target="_blank">
+      <img src="assets/icons/youtube.png"><span>YouTube</span>
     </a>
-
-    <a href="https://kick.com/americaesportsdota2"
-       target="_blank"
-       class="social-btn kick">
-      <img src="assets/icons/kick.png" alt="Kick">
-      <span>Kick</span>
+    <a class="social-btn kick" href="https://kick.com/americaesportsdota2" target="_blank">
+      <img src="assets/icons/kick.png"><span>Kick</span>
     </a>
-
-    <a href="https://www.twitch.tv/americaesportsdota2"
-       target="_blank"
-       class="social-btn twitch">
-      <img src="assets/icons/twitch.png" alt="Twitch">
-      <span>Twitch</span>
+    <a class="social-btn twitch" href="https://www.twitch.tv/americaesportsdota2" target="_blank">
+      <img src="assets/icons/twitch.png"><span>Twitch</span>
     </a>
   </div>
+
+</div>
+
 <script>
 function loadView(view, btn) {
   fetch(`views/${view}.html`)
-    .then(res => res.text())
+    .then(r => r.text())
     .then(html => {
-      document.getElementById('view-container').innerHTML = html;
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById("view-container").innerHTML = html;
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      setTimeout(loadPoll, 50);
     });
 }
 
-loadView('home', document.querySelector('.nav-btn'));
+loadView("home", document.querySelector(".nav-btn"));
 
 const pollData = {
   key: "grito-parker-2026",
   options: [
-    { id: "player1", name: "Jugador 1", votes: 0 },
-    { id: "player2", name: "Jugador 2", votes: 0 },
-    { id: "player3", name: "Jugador 3", votes: 0 },
+    { id: "p1", name: "Jugador 1", votes: 0 },
+    { id: "p2", name: "Jugador 2", votes: 0 },
+    { id: "p3", name: "Jugador 3", votes: 0 }
   ]
 };
 
@@ -377,57 +265,35 @@ function loadPoll() {
   const results = document.getElementById("results");
   if (!poll || !results) return;
 
-  const saved = JSON.parse(localStorage.getItem(pollData.key)) || pollData.options;
-
+  let data = JSON.parse(localStorage.getItem(pollData.key)) || pollData.options;
   poll.innerHTML = "";
   results.innerHTML = "";
 
-  const hasVoted = localStorage.getItem(pollData.key + "-voted");
-
-  if (!hasVoted) {
-    saved.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = opt.name;
-      btn.onclick = () => vote(opt.id);
-      poll.appendChild(btn);
+  if (!localStorage.getItem(pollData.key + "-voted")) {
+    data.forEach(opt => {
+      const b = document.createElement("button");
+      b.textContent = opt.name;
+      b.onclick = () => vote(opt.id);
+      poll.appendChild(b);
     });
   }
 
-  const totalVotes = saved.reduce((a, b) => a + b.votes, 0) || 1;
-
-  saved.forEach(opt => {
-    const percent = Math.round((opt.votes / totalVotes) * 100);
-
-    const bar = document.createElement("div");
-    bar.className = "result-bar";
-    bar.innerHTML = `
-      <div class="result-label">${opt.name} – ${opt.votes} votos</div>
-      <div class="result-fill" style="width:${percent}%"></div>
+  const total = data.reduce((a,b)=>a+b.votes,0) || 1;
+  data.forEach(opt => {
+    results.innerHTML += `
+      <div>${opt.name} (${opt.votes})</div>
+      <div class="result-fill" style="width:${(opt.votes/total)*100}%"></div>
     `;
-    results.appendChild(bar);
   });
 }
 
 function vote(id) {
   let data = JSON.parse(localStorage.getItem(pollData.key)) || pollData.options;
-
-  data = data.map(opt =>
-    opt.id === id ? { ...opt, votes: opt.votes + 1 } : opt
-  );
-
+  data = data.map(o => o.id===id ? {...o, votes:o.votes+1}:o);
   localStorage.setItem(pollData.key, JSON.stringify(data));
-  localStorage.setItem(pollData.key + "-voted", "true");
-
+  localStorage.setItem(pollData.key+"-voted","true");
   loadPoll();
 }
-
-/* Llamar después de cargar vista */
-const originalLoadView = loadView;
-loadView = function(view, btn) {
-  originalLoadView(view, btn);
-  setTimeout(loadPoll, 100);
-};
-
 </script>
 
 </body>
