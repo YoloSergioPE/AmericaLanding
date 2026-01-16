@@ -322,10 +322,6 @@ body {
 <!-- 🔥 FIREBASE REALTIME POLL -->
 <script type="module">
   let lastPollData = null;
-function resetVote() {
-  localStorage.removeItem("voted");
-  alert("Ya puedes votar otra vez");
-}
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
@@ -438,7 +434,10 @@ function renderPoll(data) {
       </div>
     `;
   });
-
+function resetVote() {
+  localStorage.removeItem("voted");
+  alert("Ya puedes votar otra vez");
+}
 
 }
 </script>
