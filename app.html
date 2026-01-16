@@ -154,30 +154,41 @@ body {
 }
 
 .social-btn {
-  min-width: 120px;
+  min-width: 150px;          /* antes 120px */
+  height: 120px;             /* altura fija para uniformidad */
   background: rgba(255,255,255,0.08);
-  border-radius: 14px;
-  padding: 12px 14px;
+  border-radius: 18px;
+  padding: 16px;
   text-align: center;
   text-decoration: none;
   color: var(--text);
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   transition: all .2s ease;
 }
 
+
 .social-btn img {
-  width: 32px;
-  margin-bottom: 8px;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
 }
+
 
 .social-btn span {
-  display: block;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
+
 .social-btn:hover {
-  background: var(--primary);
+  transform: translateY(-2px);
 }
+
 .social-title {
   margin-top: 28px;
   margin-bottom: 12px;
@@ -221,6 +232,50 @@ body {
 .social-btn.twitch:hover {
   background: rgba(168, 85, 247, 0.35);
 }
+/* POLL */
+.poll {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.poll button {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background .2s ease;
+}
+
+.poll button:hover {
+  background: var(--primary);
+}
+
+/* RESULTS */
+.poll-results {
+  margin-top: 24px;
+}
+
+.result-bar {
+  margin-bottom: 12px;
+}
+
+.result-label {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.result-fill {
+  height: 14px;
+  border-radius: 8px;
+  background: var(--primary);
+  width: 0%;
+  transition: width .3s ease;
+}
 
 </style>
 </head>
@@ -238,30 +293,62 @@ body {
 
   <div class="nav">
     <div class="nav-btn active" onclick="loadView('home', this)">
-      <img src="assets/icons/live.png">
-      <span>Transmisión</span>
+      <img src="assets/icons/concurso.png">
     </div>
 
     <div class="nav-btn" onclick="loadView('crear', this)">
-      <img src="assets/icons/account.png">
-      <span>Crear Cuenta</span>
+      <img src="assets/icons/cuenta.png">
     </div>
 
     <div class="nav-btn" onclick="loadView('retiro', this)">
-      <img src="assets/icons/withdraw.png">
-      <span>Hacer Retiro</span>
+      <img src="assets/icons/retiro.png">
     </div>
 
     <div class="nav-btn">
       <img src="assets/icons/mobile.png">
-      <span>App Mobile</span>
+    </div>
+
+    <div class="nav-btn">
+      <img src="assets/icons/live.png">
     </div>
   </div>
 
   <div id="view-container"></div>
 
 </div>
+<!-- TÍTULO REDES -->
+  <h3 class="social-title">Mis redes mi dey</h3>
 
+  <!-- BARRA DE REDES -->
+  <div class="social-bar">
+    <a href="https://www.facebook.com/americaesportsdota2"
+       target="_blank"
+       class="social-btn facebook">
+      <img src="assets/icons/facebook.png" alt="Facebook">
+      <span>Facebook</span>
+    </a>
+
+    <a href="https://www.youtube.com/@americaesportsdota2"
+       target="_blank"
+       class="social-btn youtube">
+      <img src="assets/icons/youtube.png" alt="YouTube">
+      <span>YouTube</span>
+    </a>
+
+    <a href="https://kick.com/americaesportsdota2"
+       target="_blank"
+       class="social-btn kick">
+      <img src="assets/icons/kick.png" alt="Kick">
+      <span>Kick</span>
+    </a>
+
+    <a href="https://www.twitch.tv/americaesportsdota2"
+       target="_blank"
+       class="social-btn twitch">
+      <img src="assets/icons/twitch.png" alt="Twitch">
+      <span>Twitch</span>
+    </a>
+  </div>
 <script>
 function loadView(view, btn) {
   fetch(`views/${view}.html`)
@@ -275,6 +362,72 @@ function loadView(view, btn) {
 }
 
 loadView('home', document.querySelector('.nav-btn'));
+
+const pollData = {
+  key: "grito-parker-2026",
+  options: [
+    { id: "player1", name: "Jugador 1", votes: 0 },
+    { id: "player2", name: "Jugador 2", votes: 0 },
+    { id: "player3", name: "Jugador 3", votes: 0 },
+  ]
+};
+
+function loadPoll() {
+  const poll = document.getElementById("poll");
+  const results = document.getElementById("results");
+  if (!poll || !results) return;
+
+  const saved = JSON.parse(localStorage.getItem(pollData.key)) || pollData.options;
+
+  poll.innerHTML = "";
+  results.innerHTML = "";
+
+  const hasVoted = localStorage.getItem(pollData.key + "-voted");
+
+  if (!hasVoted) {
+    saved.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt.name;
+      btn.onclick = () => vote(opt.id);
+      poll.appendChild(btn);
+    });
+  }
+
+  const totalVotes = saved.reduce((a, b) => a + b.votes, 0) || 1;
+
+  saved.forEach(opt => {
+    const percent = Math.round((opt.votes / totalVotes) * 100);
+
+    const bar = document.createElement("div");
+    bar.className = "result-bar";
+    bar.innerHTML = `
+      <div class="result-label">${opt.name} – ${opt.votes} votos</div>
+      <div class="result-fill" style="width:${percent}%"></div>
+    `;
+    results.appendChild(bar);
+  });
+}
+
+function vote(id) {
+  let data = JSON.parse(localStorage.getItem(pollData.key)) || pollData.options;
+
+  data = data.map(opt =>
+    opt.id === id ? { ...opt, votes: opt.votes + 1 } : opt
+  );
+
+  localStorage.setItem(pollData.key, JSON.stringify(data));
+  localStorage.setItem(pollData.key + "-voted", "true");
+
+  loadPoll();
+}
+
+/* Llamar después de cargar vista */
+const originalLoadView = loadView;
+loadView = function(view, btn) {
+  originalLoadView(view, btn);
+  setTimeout(loadPoll, 100);
+};
+
 </script>
 
 </body>
