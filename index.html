@@ -31,8 +31,14 @@ body {
       rgba(2,6,23,0.35) 70%,
       rgba(2,6,23,0.1) 100%
     ),
-    url("assets/america_dota.png") center / cover no-repeat;
+    url("assets/america_dota.png");
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 65% center; /* 👈 FOCO desktop */
 }
+
+
 
 /* CONTENEDOR PRINCIPAL */
 .hero {
@@ -114,6 +120,13 @@ body {
   background: rgba(255,255,255,0.18);
 }
 
+/* Tablets */
+@media (max-width: 1200px) {
+  body {
+    background-position: 55% center;
+  }
+}
+
 /* MOBILE */
 @media (max-width: 900px) {
   body {
@@ -128,8 +141,8 @@ body {
       url("assets/america_dota.png");
 
     background-size: cover;
-    background-position: center top; /* 👈 CLAVE */
     background-repeat: no-repeat;
+    background-position: center 15%; /* 👈 CLAVE mobile */
   }
 
   .hero {
