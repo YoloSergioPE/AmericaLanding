@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>América Esports - 1xBet</title>
+
+  <style>
+    :root {
+      --card: rgba(18, 24, 42, 0.92);
+      --primary: #3b82f6;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background: url("assets/fondo.jpg") center / cover no-repeat fixed;
+    }
+
+    /* OVERLAY ESTABLE */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 10, 20, 0.85);
+      z-index: 0;
+    }
+
+    body > *:not(.overlay) {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: #1f2937;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+      margin-bottom: 32px;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* VIDEO */
+    .video-box {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #020617;
+    }
+
+    .video-box iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* BOTONES */
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.35);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+
+    .action-btn:hover,
+    .action-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* CTA */
+    .cta {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 14px 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59,130,246,.35);
+    }
+
+    /* SECCIONES */
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay"></div>
+
+  <header>
+    <div class="header-left">
+      <div class="logo">LOGO</div>
+      <h1>América Esports - 1xBet</h1>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="card">
+      <h2>Tranmision en Vivo</h2>
+      <p>Closed Qualifiers SA - ESL ONE Birmingham 2026</p>
+
+      <div class="video-box">
+        <iframe
+          src="https://player.kick.com/americaesportsdota2"
+          scrolling="no"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <a href="https://1xlite-03801.world/es/registration?tag=d_4010008m_1599c_lp_aesla_reg#type=email&bonus=SPORT" class="cta">Crear cuenta 1xBet</a>
+
+      <div class="actions">
+        <button class="action-btn" onclick="showSection('crear', this)">Cómo crear cuenta</button>
+        <button class="action-btn" onclick="showSection('registro', this)">Video de registro</button>
+        <button class="action-btn" onclick="showSection('retiro', this)">Cómo hacer un retiro</button>
+      </div>
+    </section>
+
+    <!-- SECCIONES -->
+    <section id="crear" class="section card">
+      <h2>Cómo crear cuenta</h2>
+      <ul>
+        <li>1. Ingresa al enlace oficial de registro.</li>
+        <li>2. Completa tus datos correctamente.</li>
+        <li>3. Verifica tu cuenta.</li>
+        <li>4. Comienza a jugar.</li>
+      </ul>
+    </section>
+
+    <section id="registro" class="section card">
+      <h2>Video de cómo registrarte</h2>
+      <div class="video-box"></div>
+    </section>
+
+    <section id="retiro" class="section card">
+      <h2>Cómo hacer un retiro</h2>
+      <ul>
+        <li>1. Ingresa a tu perfil.</li>
+        <li>2. Selecciona retiro.</li>
+        <li>3. Elige método de pago.</li>
+        <li>4. Confirma el monto.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 América Esports · Contenido informativo no oficial de 1xBet
+    <div style="margin-top:8px; font-size:12px; opacity:.6;">
+      +18 | Juega responsablemente
+    </div>
+  </footer>
+
+  <script>
+    function showSection(id, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add('active');
+        btn.classList.add('active');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  </script>
+
+</body>
+</html>
