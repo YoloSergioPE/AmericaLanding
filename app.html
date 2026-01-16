@@ -226,6 +226,8 @@ body {
 
 <!-- 🔥 FIREBASE REALTIME POLL -->
 <script type="module">
+  let lastPollData = null;
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore,
@@ -254,16 +256,24 @@ window.loadView = function(view, btn) {
       document.getElementById("view-container").innerHTML = html;
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
+
+      // 👇 si ya hay data de Firebase, renderizar
+      if (lastPollData) {
+        setTimeout(() => renderPoll(lastPollData), 0);
+      }
     });
 };
+
 
 loadView("home", document.querySelector(".nav-btn"));
 
 /* ESCUCHA RESULTADOS EN VIVO */
 onSnapshot(pollRef, (docSnap) => {
   if (!docSnap.exists()) return;
-  renderPoll(docSnap.data());
+  lastPollData = docSnap.data();
+  renderPoll(lastPollData);
 });
+
 
 /* VOTAR */
 window.vote = async function(id) {
@@ -295,12 +305,20 @@ function renderPoll(data) {
   }
 
   const total = Object.values(data).reduce((a,b)=>a+b,0) || 1;
+  const labels = {
+    p1: "Jugador 1",
+    p2: "Jugador 2",
+    p3: "Jugador 3"
+  };
+
   Object.entries(data).forEach(([k,v]) => {
+    const name = labels[k] || k;
     results.innerHTML += `
-      <div>${k}: ${v}</div>
+      <div>${name}: ${v} votos</div>
       <div class="result-fill" style="width:${(v/total)*100}%"></div>
     `;
   });
+
 }
 </script>
 
