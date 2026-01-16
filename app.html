@@ -253,16 +253,22 @@ window.loadView = function(view, btn) {
   fetch(`views/${view}.html`)
     .then(r => r.text())
     .then(html => {
-      document.getElementById("view-container").innerHTML = html;
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      const container = document.getElementById("view-container");
+      container.innerHTML = html;
+
+      document.querySelectorAll(".nav-btn")
+        .forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
 
-      // 👇 si ya hay data de Firebase, renderizar
-      if (lastPollData) {
-        setTimeout(() => renderPoll(lastPollData), 0);
-      }
+      // 🔥 FORZAR RENDER cuando el DOM ya existe
+      requestAnimationFrame(() => {
+        if (lastPollData) {
+          renderPoll(lastPollData);
+        }
+      });
     });
 };
+
 
 
 loadView("home", document.querySelector(".nav-btn"));
