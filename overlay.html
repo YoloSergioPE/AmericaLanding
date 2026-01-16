@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Overlay Encuesta</title>
+<style>
+body {
+  background: transparent;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.overlay-card {
+  width: 400px;
+}
+
+.result-bar {
+  margin-bottom: 12px;
+}
+
+.result-label {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.result-track {
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  height: 14px;
+  overflow: hidden;
+}
+
+.result-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#3b82f6,#60a5fa);
+  transition: width .6s ease;
+}
+
+.result-fill.leader {
+  background: linear-gradient(90deg,#22c55e,#4ade80);
+}
+</style>
+</head>
+<body>
+
+<div class="overlay-card" id="results"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBN-6su09Gtltl8-VmpHzziqOLm8De5CLg",
+  authDomain: "america-esports-poll.firebaseapp.com",
+  projectId: "america-esports-poll",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const pollRef = doc(db, "polls", "grito-parker-2026");
+
+onSnapshot(pollRef, (snap) => {
+  if (!snap.exists()) return;
+  const data = snap.data();
+  render(data);
+});
+
+function render(data) {
+  const container = document.getElementById("results");
+  container.innerHTML = "";
+
+  const entries = Object.entries(data);
+  const total = entries.reduce((a,b)=>a+b[1],0) || 1;
+  const maxVotes = Math.max(...entries.map(e=>e[1]));
+
+  entries.forEach(([k,v])=>{
+    const percent = Math.round((v/total)*100);
+    const leader = v === maxVotes && v > 0;
+    container.innerHTML += `
+      <div class="result-bar">
+        <div class="result-label">${k} · ${percent}%</div>
+        <div class="result-track">
+          <div class="result-fill ${leader ? "leader" : ""}" style="width:${percent}%"></div>
+        </div>
+      </div>
+    `;
+  });
+}
+</script>
+
+</body>
+</html>

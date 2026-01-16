@@ -220,6 +220,63 @@ body {
 }
 
 
+.poll button {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.result-fill {
+  height: 14px;
+  border-radius: 8px;
+  background: var(--primary);
+}
+
+/* === RESULT BARS === */
+.result-bar {
+  margin-bottom: 14px;
+}
+
+.result-label {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.result-track {
+  width: 100%;
+  height: 16px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.result-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(59,130,246,0.9),
+    rgba(59,130,246,0.6)
+  );
+  transition: width 0.6s ease-in-out;
+}
+
+/* Líder destacado */
+.result-fill.leader {
+  background: linear-gradient(
+    90deg,
+    rgba(34,197,94,0.95),
+    rgba(34,197,94,0.6)
+  );
+  box-shadow: 0 0 12px rgba(34,197,94,0.6);
+}
+
+
 </style>
 </head>
 
@@ -359,13 +416,24 @@ function renderPoll(data) {
     p3: "Jugador 3"
   };
 
-  Object.entries(data).forEach(([k,v]) => {
+  const entries = Object.entries(data);
+  const maxVotes = Math.max(...entries.map(e => e[1]));
+
+  entries.forEach(([k,v]) => {
     const name = labels[k] || k;
+    const percent = Math.round((v / total) * 100);
+    const isLeader = v === maxVotes && v > 0;
+
     results.innerHTML += `
-      <div>${name}: ${v} votos</div>
-      <div class="result-fill" style="width:${(v/total)*100}%"></div>
+      <div class="result-bar">
+        <div class="result-label">${name} · ${v} votos (${percent}%)</div>
+        <div class="result-track">
+          <div class="result-fill ${isLeader ? "leader" : ""}" style="width:${percent}%"></div>
+        </div>
+      </div>
     `;
   });
+
 
 }
 </script>
