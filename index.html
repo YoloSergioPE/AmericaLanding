@@ -21,141 +21,149 @@
 
 body {
   min-height: 100vh;
-  background: #020617;
   color: var(--text);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(2,6,23,0.95) 0%,
+      rgba(2,6,23,0.92) 35%,
+      rgba(2,6,23,0.75) 55%,
+      rgba(2,6,23,0.35) 70%,
+      rgba(2,6,23,0.1) 100%
+    ),
+    url("assets/hero.jpg") center / cover no-repeat;
 }
 
-.wrapper {
+/* CONTENEDOR PRINCIPAL */
+.hero {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  align-items: center;
-  padding: 60px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Degradado sutil */
-.wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(2,6,23,0.95) 45%,
-    rgba(2,6,23,0.75) 65%,
-    rgba(2,6,23,0.2) 100%
-  );
-  z-index: 0;
-}
-
-/* IZQUIERDA */
-.left {
-  position: relative;
-  z-index: 1;
-}
-
-.logo {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 32px;
+  padding: 80px;
 }
 
-.logo img {
-  width: 56px;
-  height: 56px;
+/* BLOQUE IZQUIERDO */
+.hero-content {
+  max-width: 640px;
 }
 
-.logo h1 {
-  font-size: 2.4rem;
-  font-weight: 700;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  color: var(--muted);
-  max-width: 420px;
+/* LOGO */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 24px;
   margin-bottom: 40px;
 }
 
+.brand img {
+  width: 96px;
+  height: 96px;
+}
+
+.brand h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* SUBTEXTO */
+.subtitle {
+  font-size: 1.35rem;
+  color: var(--muted);
+  max-width: 520px;
+  margin-bottom: 56px;
+}
+
+/* ACCIONES */
 .actions {
   display: flex;
-  gap: 16px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
 .btn {
-  padding: 14px 26px;
-  border-radius: 14px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 20px 38px;
+  border-radius: 18px;
+  font-size: 1.15rem;
+  font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: all .2s ease;
   text-decoration: none;
+  transition: all .2s ease;
 }
 
+/* BOTÓN PRINCIPAL */
 .btn.primary {
   background: var(--primary);
   color: #fff;
 }
 
 .btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(59,130,246,.4);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(59,130,246,.45);
 }
 
+/* BOTÓN SECUNDARIO */
 .btn.secondary {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.1);
   color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 .btn.secondary:hover {
-  background: rgba(255,255,255,0.15);
-}
-
-/* DERECHA */
-.right {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.right img {
-  max-width: 100%;
-  max-height: 520px;
-  object-fit: contain;
+  background: rgba(255,255,255,0.18);
 }
 
 /* MOBILE */
 @media (max-width: 900px) {
-  .wrapper {
-    grid-template-columns: 1fr;
-    padding: 40px 24px;
+  body {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(2,6,23,0.96) 0%,
+        rgba(2,6,23,0.9) 45%,
+        rgba((2,6,23,0.75)) 70%,
+        rgba(2,6,23,0.4) 100%
+      ),
+      url("assets/hero.jpg") center / cover no-repeat;
+  }
+
+  .hero {
+    padding: 48px 24px;
     text-align: center;
   }
 
-  .logo {
-    justify-content: center;
+  .hero-content {
+    margin: 0 auto;
+  }
+
+  .brand {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .brand img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .brand h1 {
+    font-size: 2.4rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
   }
 
   .actions {
     justify-content: center;
   }
 
-  .right {
-    margin-top: 40px;
-  }
-
-  .wrapper::before {
-    background: linear-gradient(
-      180deg,
-      rgba(2,6,23,0.95) 40%,
-      rgba(2,6,23,0.75) 65%,
-      rgba(2,6,23,0.2) 100%
-    );
+  .btn {
+    width: 100%;
+    max-width: 320px;
+    padding: 18px;
   }
 }
 </style>
@@ -163,22 +171,24 @@ body {
 
 <body>
 
-<div class="wrapper">
+<section class="hero">
+  <div class="hero-content">
 
-  <!-- IZQUIERDA -->
-  <div class="left">
-    <div class="logo">
+    <div class="brand">
       <img src="assets/logo.png" alt="América Esports">
-      <h1>América Esports</h1>
+      <h1>América<br>Esports</h1>
     </div>
 
     <p class="subtitle">
-      Comunidad competitiva, transmisiones en vivo y experiencias esports.
+      Comunidad competitiva, transmisiones en vivo y experiencias esports
+      de alto nivel.
     </p>
 
     <div class="actions">
-      <a href="https://1xlite-03801.world/es/registration?tag=d_4010008m_1599c_lp_aesla_reg#type=email&bonus=SPORT"
-         class="btn primary">
+      <a
+        href="https://1xlite-03801.world/es/registration?tag=d_4010008m_1599c_lp_aesla_reg#type=email&bonus=SPORT"
+        class="btn primary"
+      >
         Únete a 1xBet
       </a>
 
@@ -186,14 +196,9 @@ body {
         Com. del Marciano
       </a>
     </div>
-  </div>
 
-  <!-- DERECHA -->
-  <div class="right">
-    <img src="assets/ImgInicio.jpg" alt="América Esports Visual">
   </div>
-
-</div>
+</section>
 
 </body>
 </html>
