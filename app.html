@@ -59,12 +59,11 @@ body {
   font-weight: 700;
 }
 
-/* NAV BAR */
+/* NAV */
 .nav {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding-bottom: 16px;
   margin-bottom: 24px;
 }
 
@@ -75,7 +74,6 @@ body {
   padding: 14px;
   text-align: center;
   cursor: pointer;
-  transition: all .2s ease;
   flex-shrink: 0;
 }
 
@@ -146,8 +144,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  transition: all .2s ease;
 }
 
 .social-btn img {
@@ -160,10 +156,6 @@ body {
 .social-btn.youtube { background: rgba(239,68,68,.15); }
 .social-btn.kick     { background: rgba(34,197,94,.15); }
 .social-btn.twitch   { background: rgba(168,85,247,.15); }
-
-.social-btn:hover {
-  transform: translateY(-2px);
-}
 
 /* POLL */
 .poll {
@@ -201,7 +193,7 @@ body {
 <div class="app">
 
   <div class="header">
-    <img src="assets/logo.png" alt="América Esports">
+    <img src="assets/logo.png">
     <h1>América Esports</h1>
   </div>
 
@@ -215,84 +207,100 @@ body {
     <div class="nav-btn" onclick="loadView('retiro', this)">
       <img src="assets/icons/retiro.png">
     </div>
+    <div class="nav-btn" onclick="loadView('envivo', this)">
+      <img src="assets/icons/envivo.png">
+    </div>
   </div>
 
   <div id="view-container"></div>
 
   <h3 class="social-title">Mis redes mi dey</h3>
   <div class="social-bar">
-    <a class="social-btn facebook" href="https://www.facebook.com/americaesportsdota2" target="_blank">
-      <img src="assets/icons/facebook.png"><span>Facebook</span>
-    </a>
-    <a class="social-btn youtube" href="https://www.youtube.com/@americaesportsdota2" target="_blank">
-      <img src="assets/icons/youtube.png"><span>YouTube</span>
-    </a>
-    <a class="social-btn kick" href="https://kick.com/americaesportsdota2" target="_blank">
-      <img src="assets/icons/kick.png"><span>Kick</span>
-    </a>
-    <a class="social-btn twitch" href="https://www.twitch.tv/americaesportsdota2" target="_blank">
-      <img src="assets/icons/twitch.png"><span>Twitch</span>
-    </a>
+    <a class="social-btn facebook" href="https://www.facebook.com/americaesportsdota2" target="_blank"><img src="assets/icons/facebook.png"></a>
+    <a class="social-btn youtube" href="https://www.youtube.com/@americaesportsdota2" target="_blank"><img src="assets/icons/youtube.png"></a>
+    <a class="social-btn kick" href="https://kick.com/americaesportsdota2" target="_blank"><img src="assets/icons/kick.png"></a>
+    <a class="social-btn twitch" href="https://www.twitch.tv/americaesportsdota2" target="_blank"><img src="assets/icons/twitch.png"></a>
   </div>
 
 </div>
 
-<script>
-function loadView(view, btn) {
+<!-- 🔥 FIREBASE REALTIME POLL -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  onSnapshot,
+  updateDoc,
+  increment
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* 🔴 CONFIGURA AQUÍ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBN-6su09Gtltl8-VmpHzziqOLm8De5CLg",
+  authDomain: "america-esports-poll.firebaseapp.com",
+  projectId: "america-esports-poll",
+};
+
+const appFirebase = initializeApp(firebaseConfig);
+const db = getFirestore(appFirebase);
+const pollRef = doc(db, "polls", "grito-parker-2026");
+
+/* CARGA VISTAS */
+window.loadView = function(view, btn) {
   fetch(`views/${view}.html`)
     .then(r => r.text())
     .then(html => {
       document.getElementById("view-container").innerHTML = html;
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
-      setTimeout(loadPoll, 50);
     });
-}
+};
 
 loadView("home", document.querySelector(".nav-btn"));
 
-const pollData = {
-  key: "grito-parker-2026",
-  options: [
-    { id: "p1", name: "Jugador 1", votes: 0 },
-    { id: "p2", name: "Jugador 2", votes: 0 },
-    { id: "p3", name: "Jugador 3", votes: 0 }
-  ]
+/* ESCUCHA RESULTADOS EN VIVO */
+onSnapshot(pollRef, (docSnap) => {
+  if (!docSnap.exists()) return;
+  renderPoll(docSnap.data());
+});
+
+/* VOTAR */
+window.vote = async function(id) {
+  if (localStorage.getItem("voted")) {
+    alert("Ya votaste");
+    return;
+  }
+  await updateDoc(pollRef, { [id]: increment(1) });
+  localStorage.setItem("voted", "true");
 };
 
-function loadPoll() {
+/* RENDER */
+function renderPoll(data) {
   const poll = document.getElementById("poll");
   const results = document.getElementById("results");
   if (!poll || !results) return;
 
-  let data = JSON.parse(localStorage.getItem(pollData.key)) || pollData.options;
   poll.innerHTML = "";
   results.innerHTML = "";
 
-  if (!localStorage.getItem(pollData.key + "-voted")) {
-    data.forEach(opt => {
+  if (!localStorage.getItem("voted")) {
+    ["p1","p2","p3"].forEach(id => {
       const b = document.createElement("button");
-      b.textContent = opt.name;
-      b.onclick = () => vote(opt.id);
+      b.textContent = id === "p1" ? "Jugador 1" :
+                      id === "p2" ? "Jugador 2" : "Jugador 3";
+      b.onclick = () => vote(id);
       poll.appendChild(b);
     });
   }
 
-  const total = data.reduce((a,b)=>a+b.votes,0) || 1;
-  data.forEach(opt => {
+  const total = Object.values(data).reduce((a,b)=>a+b,0) || 1;
+  Object.entries(data).forEach(([k,v]) => {
     results.innerHTML += `
-      <div>${opt.name} (${opt.votes})</div>
-      <div class="result-fill" style="width:${(opt.votes/total)*100}%"></div>
+      <div>${k}: ${v}</div>
+      <div class="result-fill" style="width:${(v/total)*100}%"></div>
     `;
   });
-}
-
-function vote(id) {
-  let data = JSON.parse(localStorage.getItem(pollData.key)) || pollData.options;
-  data = data.map(o => o.id===id ? {...o, votes:o.votes+1}:o);
-  localStorage.setItem(pollData.key, JSON.stringify(data));
-  localStorage.setItem(pollData.key+"-voted","true");
-  loadPoll();
 }
 </script>
 
