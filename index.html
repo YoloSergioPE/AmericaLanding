@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>América Esports</title>
+
+<style>
+:root {
+  --primary: #3b82f6;
+  --text: #ffffff;
+  --muted: #b0b3c0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #020617;
+  color: var(--text);
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  padding: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Degradado sutil */
+.wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(2,6,23,0.95) 45%,
+    rgba(2,6,23,0.75) 65%,
+    rgba(2,6,23,0.2) 100%
+  );
+  z-index: 0;
+}
+
+/* IZQUIERDA */
+.left {
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.logo img {
+  width: 56px;
+  height: 56px;
+}
+
+.logo h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 420px;
+  margin-bottom: 40px;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 14px 26px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s ease;
+  text-decoration: none;
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(59,130,246,.4);
+}
+
+.btn.secondary {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.btn.secondary:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* DERECHA */
+.right {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.right img {
+  max-width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .logo {
+    justify-content: center;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
+  .right {
+    margin-top: 40px;
+  }
+
+  .wrapper::before {
+    background: linear-gradient(
+      180deg,
+      rgba(2,6,23,0.95) 40%,
+      rgba(2,6,23,0.75) 65%,
+      rgba(2,6,23,0.2) 100%
+    );
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- IZQUIERDA -->
+  <div class="left">
+    <div class="logo">
+      <img src="assets/logo.png" alt="América Esports">
+      <h1>América Esports</h1>
+    </div>
+
+    <p class="subtitle">
+      Comunidad competitiva, transmisiones en vivo y experiencias esports.
+    </p>
+
+    <div class="actions">
+      <a href="https://1xlite-03801.world/es/registration?tag=d_4010008m_1599c_lp_aesla_reg#type=email&bonus=SPORT"
+         class="btn primary">
+        Únete a 1xBet
+      </a>
+
+      <a href="app.html" class="btn secondary">
+        Com. del Marciano
+      </a>
+    </div>
+  </div>
+
+  <!-- DERECHA -->
+  <div class="right">
+    <img src="assets/hero.png" alt="América Esports Visual">
+  </div>
+
+</div>
+
+</body>
+</html>
