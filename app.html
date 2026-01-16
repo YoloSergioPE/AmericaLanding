@@ -307,6 +307,7 @@ body {
   </div>
 
   <div id="view-container"></div>
+<button onclick="resetVote()">Reset mi voto</button>
 
   <h3 class="social-title">Mis redes mi dey</h3>
   <div class="social-bar">
@@ -321,6 +322,10 @@ body {
 <!-- 🔥 FIREBASE REALTIME POLL -->
 <script type="module">
   let lastPollData = null;
+function resetVote() {
+  localStorage.removeItem("voted");
+  alert("Ya puedes votar otra vez");
+}
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
