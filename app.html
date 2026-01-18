@@ -77,9 +77,20 @@ body {
   flex-shrink: 0;
 }
 
-.nav-btn img {
-  width: 48px;
+.nav-btn {
+  min-width: 140px;
+  height: 100px;              /* más alto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.nav-btn img {
+  width: 70px;                /* más grande */
+  height: 70px;
+  object-fit: contain;
+}
+
 
 .nav-btn.active,
 .nav-btn:hover {
@@ -146,11 +157,24 @@ body {
   justify-content: center;
 }
 
+.social-btn {
+  min-width: 150px;
+  height: 140px;              /* más alto */
+}
+
 .social-btn img {
-  width: 42px;
-  height: 42px;
+  width: 80px;                /* mucho más grande */
+  height: 80px;
   object-fit: contain;
 }
+
+.nav-btn:hover img,
+.social-btn:hover img {
+  transform: scale(1.08);
+  transition: transform 0.2s ease;
+}
+
+
 
 .social-btn.facebook { background: rgba(59,130,246,.15); }
 .social-btn.youtube { background: rgba(239,68,68,.15); }
@@ -307,7 +331,6 @@ body {
   </div>
 
   <div id="view-container"></div>
-<button onclick="resetVote()">Reset mi voto</button>
 
   <h3 class="social-title">Mis redes mi dey</h3>
   <div class="social-bar">
