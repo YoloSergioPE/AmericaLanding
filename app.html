@@ -300,6 +300,78 @@ body {
   box-shadow: 0 0 12px rgba(34,197,94,0.6);
 }
 
+/* ============================= */
+/* VISTAS CREAR / REGISTRO / RETIRO */
+/* ============================= */
+
+.app-selector {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0 22px;
+}
+
+.app-btn {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.app-btn:hover {
+  background: rgba(59,130,246,0.25);
+}
+
+.app-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Contenedores por App */
+.app-content {
+  display: none;
+}
+
+.app-content.active {
+  display: block;
+}
+
+/* Pasos */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.step {
+  background: rgba(255,255,255,0.04);
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.step h4 {
+  color: var(--primary);
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.step p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.step img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  display: block;
+}
+
 
 </style>
 </head>
@@ -380,13 +452,26 @@ window.loadView = function(view, btn) {
 
       // 🔥 FORZAR RENDER cuando el DOM ya existe
       requestAnimationFrame(() => {
-        if (lastPollData) {
-          renderPoll(lastPollData);
-        }
+        initAppSelectors();
+          if (lastPollData) renderPoll(lastPollData);
       });
     });
 };
 
+function initAppSelectors() {
+  const buttons = document.querySelectorAll(".app-btn");
+  const contents = document.querySelectorAll(".app-content");
+
+  buttons.forEach(btn => {
+    btn.onclick = () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.app)?.classList.add("active");
+    };
+  });
+}
 
 
 loadView("home", document.querySelector(".nav-btn"));
