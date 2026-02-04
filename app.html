@@ -494,7 +494,7 @@ window.vote = async function(id) {
   localStorage.setItem("voted", "true");
 };
 
-/* RENDER */
+/* RENDER 
 function renderPoll(data) {
   const poll = document.getElementById("poll");
   const results = document.getElementById("results");
@@ -533,25 +533,26 @@ function renderPoll(data) {
     const percent = Math.round((v / total) * 100);
     const isLeader = v === maxVotes && v > 0;
 
-    // results.innerHTML += `
-    //  <div class="result-bar">
-     //   <div class="result-label">${name} · ${v} votos (${percent}%)</div>
-     //   <div class="result-track">
-    //      <div class="result-fill ${isLeader ? "leader" : ""}" style="width:${percent}%"></div>
-    //    </div>
-    //  </div>
-    //`;
+     results.innerHTML += `
+      <div class="result-bar">
+        <div class="result-label">${name} · ${v} votos (${percent}%)</div>
+        <div class="result-track">
+          <div class="result-fill ${isLeader ? "leader" : ""}" style="width:${percent}%"></div>
+        </div>
+      </div>
+    `;
   });
 function resetVote() {
   localStorage.removeItem("voted");
   alert("Ya puedes votar otra vez");
 }
 
-}
+}*/
 </script>
 
 </body>
 </html>
+
 
 
 
