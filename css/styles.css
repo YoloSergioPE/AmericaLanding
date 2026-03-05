@@ -1,0 +1,64 @@
+:root {
+  --primary: #3b82f6;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --card: rgba(18, 24, 42, 0.92);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--text);
+}
+
+/* COMPONENTES REUTILIZABLES */
+
+.btn {
+  padding: 20px 38px;
+  border-radius: 18px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(59,130,246,.45);
+}
+
+/* CARD reutilizable */
+
+.card {
+  background: rgba(20,25,45,0.85);
+  border-radius: 22px;
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+/* Animación global */
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
