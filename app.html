@@ -68,7 +68,7 @@ body {
 }
 
 .header h1::after {
-  content: " LIVE HUB";
+  content: " Comunidad del Marciano";
   color: var(--primary);
 }
 
@@ -345,11 +345,12 @@ box-shadow:0 10px 20px rgba(59,130,246,0.3);
 /* RANKING */
 
 .ranking-list{
-list-style:none;
-margin-top:12px;
 display:flex;
-flex-direction:column;
-gap:8px;
+gap:20px;
+padding:10px;
+list-style:none;
+overflow-x:auto;
+scrollbar-width:none;
 }
 
 .ranking-list li{
@@ -360,6 +361,34 @@ font-weight:500;
 }
 
 
+.rank-card{
+background:#0f172a;
+padding:18px;
+border-radius:14px;
+text-align:center;
+min-width:140px;
+transition:.2s;
+}
+
+.rank-card:hover{
+transform:scale(1.05);
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
+}
+
+.rank-pos{
+font-size:28px;
+margin-bottom:6px;
+}
+
+.rank-name{
+font-weight:bold;
+color:white;
+}
+
+.rank-points{
+font-size:13px;
+color:#94a3b8;
+}
 
 </style>
 </head>
@@ -458,7 +487,7 @@ if(e.target.id === "pais"){
 const ciudad = document.getElementById("ciudadPeru")
 const distrito = document.getElementById("distritoLima")
 
-if(e.target.value === "peru"){
+if(e.target.value === "Perú"){
 ciudad.style.display = "block"
 }else{
 ciudad.style.display = "none"
@@ -471,7 +500,7 @@ if(e.target.id === "ciudadPeru"){
 
 const distrito = document.getElementById("distritoLima")
 
-if(e.target.value === "lima"){
+if(e.target.value === "Lima"){
 distrito.style.display = "block"
 }else{
 distrito.style.display = "none"
@@ -481,6 +510,81 @@ distrito.style.display = "none"
 
 })
 
+
+/*-SCRIPT ENVIO DEL FORMULARIO-*/
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbxdOAF4NswAF3zzwdRJKgilQQ0ClFsJIdP1CbpAkYsQqCNZNDLjzmYCropskBxd5JsG/exec";
+
+document.addEventListener("submit", async function(e){
+
+if(e.target.id === "formMarciano"){
+
+e.preventDefault();
+
+const form = new FormData(e.target);
+const data = Object.fromEntries(form.entries());
+
+await fetch(scriptURL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify(data)
+});
+
+alert("👽 Gracias por ser parte de la Comunidad");
+
+e.target.reset();
+
+}
+
+});
+
+
+/*-SCRIPT de RANKING Desviadores-*/
+
+const rankingURL = "https://docs.google.com/spreadsheets/d/e/1J3xMub8Fzq6fiY8koOl7mq8q9lngOkJ5DBYkyg7Yjpw/pub?output=csv";
+
+fetch(rankingURL)
+.then(res=>res.text())
+.then(data=>{
+
+const rows = data.split("\n").slice(1);
+
+const ul = document.getElementById("rankingDesviadores");
+
+ul.innerHTML="";
+
+rows.forEach((row,i)=>{
+
+const cols = row.split(",");
+
+const nombre = cols[1];
+const puntos = cols[2];
+
+let medal="";
+
+if(i==0) medal="🥇";
+if(i==1) medal="🥈";
+if(i==2) medal="🥉";
+if(i==3) medal="4️⃣";
+if(i==4) medal="5️⃣";
+
+const li = document.createElement("li");
+
+li.innerHTML = `
+<div class="rank-card">
+<div class="rank-pos">${medal}</div>
+<div class="rank-name">${nombre}</div>
+<div class="rank-points">${puntos} pts</div>
+</div>
+`;
+
+ul.appendChild(li);
+
+});
+
+});
 </script>
 
 </body>
