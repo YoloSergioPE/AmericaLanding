@@ -448,6 +448,39 @@ function initAppSelectors() {
 
 loadView("home", document.querySelector(".nav-btn"));
 
+
+/*-Script de Formulario-*/
+
+document.addEventListener("change", function(e){
+
+if(e.target.id === "pais"){
+
+const ciudad = document.getElementById("ciudadPeru")
+const distrito = document.getElementById("distritoLima")
+
+if(e.target.value === "peru"){
+ciudad.style.display = "block"
+}else{
+ciudad.style.display = "none"
+distrito.style.display = "none"
+}
+
+}
+
+if(e.target.id === "ciudadPeru"){
+
+const distrito = document.getElementById("distritoLima")
+
+if(e.target.value === "lima"){
+distrito.style.display = "block"
+}else{
+distrito.style.display = "none"
+}
+
+}
+
+})
+
 </script>
 
 </body>

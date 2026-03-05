@@ -5,18 +5,59 @@
 
 <form id="formMarciano" class="marciano-form">
 
-<input type="text" name="nombre" placeholder="Tu nickname" required>
+<input type="text" name="nombre" placeholder="Tu nombre" required>
 
-<input type="text" name="edad" placeholder="Edad">
+<input type="number" name="edad" placeholder="Edad" required>
 
-<select name="juego">
-<option>Dota 2</option>
-<option>CS2</option>
-<option>Valorant</option>
-<option>Otro</option>
+<!-- PAIS -->
+<select id="pais" name="pais" required>
+<option value="">Selecciona tu país</option>
+<option value="peru">Perú</option>
+<option value="mexico">México</option>
+<option value="argentina">Argentina</option>
+<option value="otro">Otro</option>
 </select>
 
-<input type="text" name="pais" placeholder="País">
+<!-- CIUDAD PERU -->
+<select id="ciudadPeru" name="ciudad" style="display:none;">
+<option value="">Ciudad</option>
+<option value="lima">Lima</option>
+<option value="arequipa">Arequipa</option>
+<option value="trujillo">Trujillo</option>
+<option value="cusco">Cusco</option>
+<option value="piura">Piura</option>
+</select>
+
+<!-- DISTRITO LIMA -->
+<select id="distritoLima" name="distrito" style="display:none;">
+<option value="">Distrito de Lima</option>
+<option>Miraflores</option>
+<option>San Isidro</option>
+<option>San Borja</option>
+<option>Surco</option>
+<option>La Molina</option>
+<option>San Miguel</option>
+<option>Pueblo Libre</option>
+<option>Jesús María</option>
+<option>Lince</option>
+<option>Magdalena</option>
+</select>
+
+<!-- ORIGEN -->
+<select name="origen" required>
+<option value="">¿De dónde nos ves?</option>
+<option>Facebook</option>
+<option>Twitch</option>
+<option>Youtube</option>
+<option>Kick</option>
+</select>
+
+<!-- CUENTA -->
+<select name="cuenta" required>
+<option value="">¿Tienes cuenta en 1xBet?</option>
+<option>Si</option>
+<option>No</option>
+</select>
 
 <button type="submit">Enviar</button>
 
