@@ -431,124 +431,168 @@ color:#94a3b8;
 
 </div>
 
-<script >
- 
-/* CARGA VISTAS */
-window.loadView = function(view, btn) {
-  fetch(`views/${view}.html`)
-    .then(r => {
-      if (!r.ok) throw new Error("Vista no encontrada");
-      return r.text();
-    })
-    .then(html => {
-      const container = document.getElementById("view-container");
-      container.innerHTML = html;
+<script>
 
-      document.querySelectorAll(".nav-btn")
-        .forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
+/* ============================= */
+/* CONFIGURACIÓN GLOBAL */
+/* ============================= */
 
-      requestAnimationFrame(() => {
-        initAppSelectors();
-      });
-    })
-    .catch(err => {
-      document.getElementById("view-container").innerHTML =
-        `<div class="card">Error cargando la vista</div>`;
-      console.error(err);
-    });
+const CONFIG = {
+scriptURL:"https://script.google.com/macros/s/AKfycbySzKJARPGa52RRy4i28X74OT-wm6AselgKvcWEQCf6PJkPpnzq0FV7dGeTUbQIqsLq/exec",
+rankingURL:"https://docs.google.com/spreadsheets/d/1J3xMub8Fzq6fiY8koOl7mq8q9lngOkJ5DBYkyg7Yjpw/gviz/tq?tqx=out:csv&gid=0"
 };
 
-function initAppSelectors() {
-  const buttons = document.querySelectorAll(".app-btn");
-  const contents = document.querySelectorAll(".app-content");
 
-  buttons.forEach(btn => {
-    btn.onclick = () => {
-      buttons.forEach(b => b.classList.remove("active"));
-      contents.forEach(c => c.classList.remove("active"));
+/* ============================= */
+/* CARGA DE VISTAS */
+/* ============================= */
 
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.app)?.classList.add("active");
-    };
-  });
+async function loadView(view,btn){
+
+try{
+
+const res = await fetch(`views/${view}.html`);
+const html = await res.text();
+
+const container = document.getElementById("view-container");
+container.innerHTML = html;
+
+/* activar botón nav */
+document.querySelectorAll(".nav-btn")
+.forEach(b=>b.classList.remove("active"));
+
+if(btn) btn.classList.add("active");
+
+/* iniciar scripts dependientes */
+initFormLogic();
+loadRanking();
+initAppSelectors();
+
+}catch(err){
+
+console.error(err);
+
+document.getElementById("view-container").innerHTML =
+`<div class="card">Error cargando la vista</div>`;
+
+}
+
 }
 
 
-loadView("home", document.querySelector(".nav-btn"));
+/* ============================= */
+/* SELECTORES APP (crear cuenta) */
+/* ============================= */
+
+function initAppSelectors(){
+
+const buttons = document.querySelectorAll(".app-btn");
+const contents = document.querySelectorAll(".app-content");
+
+buttons.forEach(btn=>{
+
+btn.onclick=()=>{
+
+buttons.forEach(b=>b.classList.remove("active"));
+contents.forEach(c=>c.classList.remove("active"));
+
+btn.classList.add("active");
+
+document
+.getElementById(btn.dataset.app)
+?.classList.add("active");
+
+};
+
+});
+
+}
 
 
-/*-Script de Formulario-*/
+/* ============================= */
+/* LÓGICA DEL FORMULARIO */
+/* ============================= */
 
-document.addEventListener("change", function(e){
+function initFormLogic(){
 
-if(e.target.id === "pais"){
+const form = document.getElementById("formMarciano");
+if(!form) return;
 
-const ciudad = document.getElementById("ciudadPeru")
-const distrito = document.getElementById("distritoLima")
 
-if(e.target.value === "Perú"){
-ciudad.style.display = "block"
+/* select dinámico país */
+
+document.addEventListener("change",function(e){
+
+if(e.target.id==="pais"){
+
+const ciudad = document.getElementById("ciudadPeru");
+const distrito = document.getElementById("distritoLima");
+
+if(e.target.value==="Perú"){
+ciudad.style.display="block";
 }else{
-ciudad.style.display = "none"
-distrito.style.display = "none"
+ciudad.style.display="none";
+distrito.style.display="none";
 }
 
 }
 
-if(e.target.id === "ciudadPeru"){
 
-const distrito = document.getElementById("distritoLima")
+if(e.target.id==="ciudadPeru"){
 
-if(e.target.value === "Lima"){
-distrito.style.display = "block"
+const distrito = document.getElementById("distritoLima");
+
+if(e.target.value==="Lima"){
+distrito.style.display="block";
 }else{
-distrito.style.display = "none"
+distrito.style.display="none";
 }
 
 }
 
-})
+});
 
 
-/*-SCRIPT ENVIO DEL FORMULARIO-*/
+/* envio formulario */
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbySzKJARPGa52RRy4i28X74OT-wm6AselgKvcWEQCf6PJkPpnzq0FV7dGeTUbQIqsLq/exec";
-
-document.addEventListener("submit", async function(e){
-
-if(e.target.id === "formMarciano"){
+form.addEventListener("submit",async function(e){
 
 e.preventDefault();
 
-const form = new FormData(e.target);
-const data = Object.fromEntries(form.entries());
+const formData = new FormData(form);
+const data = Object.fromEntries(formData.entries());
 
-await fetch(scriptURL,{
+await fetch(CONFIG.scriptURL,{
 method:"POST",
+mode:"no-cors",
 body: JSON.stringify(data)
 });
 
 alert("👽 Gracias por ser parte de la Comunidad");
 
-e.target.reset();
-
-}
+form.reset();
 
 });
 
+}
 
-/*-SCRIPT de RANKING Desviadores-*/
 
-const rankingURL = "https://docs.google.com/spreadsheets/d/1J3xMub8Fzq6fiY8koOl7mq8q9lngOkJ5DBYkyg7Yjpw/gviz/tq?tqx=out:csv&gid=0";
+/* ============================= */
+/* RANKING DESVIADORES */
+/* ============================= */
 
-fetch(rankingURL)
-.then(res=>res.text())
-.then(data=>{
-
-const rows = data.split("\n").slice(1);
+async function loadRanking(){
 
 const ul = document.getElementById("rankingDesviadores");
+
+if(!ul) return;
+
+try{
+
+const res = await fetch(CONFIG.rankingURL);
+const text = await res.text();
+
+const rows = text.split("\n").slice(1,6);
 
 ul.innerHTML="";
 
@@ -559,19 +603,13 @@ const cols = row.split(",");
 const nombre = cols[1];
 const puntos = cols[2];
 
-let medal="";
+const medals=["🥇","🥈","🥉","4️⃣","5️⃣"];
 
-if(i==0) medal="🥇";
-if(i==1) medal="🥈";
-if(i==2) medal="🥉";
-if(i==3) medal="4️⃣";
-if(i==4) medal="5️⃣";
+const li=document.createElement("li");
 
-const li = document.createElement("li");
-
-li.innerHTML = `
+li.innerHTML=`
 <div class="rank-card">
-<div class="rank-pos">${medal}</div>
+<div class="rank-pos">${medals[i]}</div>
 <div class="rank-name">${nombre}</div>
 <div class="rank-points">${puntos} pts</div>
 </div>
@@ -581,7 +619,26 @@ ul.appendChild(li);
 
 });
 
+}catch(err){
+
+console.error("Error cargando ranking",err);
+
+}
+
+}
+
+
+/* ============================= */
+/* INICIO APP */
+/* ============================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+loadView("home",document.querySelector(".nav-btn"));
+
 });
+
+
 </script>
 
 </body>
