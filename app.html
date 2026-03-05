@@ -438,7 +438,7 @@ color:#94a3b8;
 /* ============================= */
 
 const CONFIG = {
-scriptURL:"https://script.google.com/macros/s/AKfycbz5UTH0X7Qkl14fJbBFL7dTcoq6ubM_zE-U58UAUYa3nZOxi2rByuMOk2tpETMVHoSk/exec",
+scriptURL:"https://script.google.com/macros/s/AKfycbz4Lpc8N6YyyTNI6jNM7yO4t_QHAfgEbJfBdiPHRGH2365vFDzY4N_VRv6gxgAEYtLo/exec",
 rankingURL:"https://docs.google.com/spreadsheets/d/1J3xMub8Fzq6fiY8koOl7mq8q9lngOkJ5DBYkyg7Yjpw/gviz/tq?tqx=out:csv&gid=0"
 };
 
@@ -555,19 +555,15 @@ distrito.style.display="none";
 
 /* envio formulario */
 
-form.addEventListener("submit",async function(e){
+form.addEventListener("submit", async function(e){
 
 e.preventDefault();
 
 const formData = new FormData(form);
-const data = Object.fromEntries(formData.entries());
 
 await fetch(CONFIG.scriptURL,{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body: JSON.stringify(data)
+body: formData
 });
 
 alert("👽 Gracias por ser parte de la Comunidad");
