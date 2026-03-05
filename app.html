@@ -80,21 +80,27 @@ body {
   margin-bottom: 28px;
 }
 
-.nav-btn {
-  height: 120px;
-  border-radius: 18px;
-  background: rgba(18,24,42,0.85);
-  border: 1px solid rgba(255,255,255,0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .25s ease;
-  cursor: pointer;
+.nav-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 18px;
+  border-radius:12px;
+  background:rgba(18,24,42,0.85);
+  border:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;
+  transition:all .25s ease;
+  font-weight:600;
+  font-size:14px;
 }
 
 .nav-btn img{
-  width: 70px;
-  height: 70px;
+  width:22px;
+  height:22px;
+}
+
+.nav-btn span{
+  white-space:nowrap;
 }
 
 .nav-btn:hover{
@@ -164,24 +170,27 @@ body {
 }
 
 .social-btn{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);
-  transition:all .25s ease;
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px 18px;
+border-radius:12px;
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.1);
+text-decoration:none;
+color:white;
+font-weight:600;
+transition:all .25s ease;
 }
 
 .social-btn img{
-  width:32px;
+width:22px;
+height:22px;
 }
 
 .social-btn:hover{
-  transform:scale(1.15);
-  background:rgba(59,130,246,0.25);
+transform:translateY(-2px);
+background:rgba(59,130,246,0.25);
 }
 
 .social-btn img {
@@ -424,27 +433,49 @@ display:none;
   <div class="nav">
     <div class="nav-btn active" onclick="loadView('home', this)">
       <img src="assets/icons/concurso.png">
+      <span>Acerca de ti</span>
     </div>
+
     <div class="nav-btn" onclick="loadView('crear', this)">
       <img src="assets/icons/cuenta.png">
+      <span>Crear cuenta</span>
     </div>
+
     <div class="nav-btn" onclick="loadView('retiro', this)">
       <img src="assets/icons/retiro.png">
+      <span>Retirar</span>
     </div>
+
     <div class="nav-btn" onclick="loadView('envivo', this)">
       <img src="assets/icons/envivo.png">
+      <span>En vivo</span>
     </div>
   </div>
 
   <div id="view-container"></div>
 
-  <h3 class="social-title">Mis redes mi dey</h3>
+  <h3 class="social-title">Únete a nuestras redes</h3>
   <div class="social-bar">
-    <a class="social-btn facebook" href="https://www.facebook.com/americaesportsdota2" target="_blank"><img src="assets/icons/fbicon.png"></a>
-    <a class="social-btn youtube" href="https://www.youtube.com/@americaesportsdota2" target="_blank"><img src="assets/icons/yticon.png"></a>
-    <a class="social-btn kick" href="https://kick.com/americaesportsdota2" target="_blank"><img src="assets/icons/kickicon.png"></a>
-    <a class="social-btn twitch" href="https://www.twitch.tv/americaesportsdota2" target="_blank"><img src="assets/icons/twitchicon.png"></a>
-  </div>
+    <a class="social-btn facebook" href="https://www.facebook.com/americaesportsdota2" target="_blank">
+    <img src="assets/icons/fbicon.png">
+    <span>Facebook</span>
+    </a>
+
+    <a class="social-btn youtube" href="https://www.youtube.com/@americaesportsdota2" target="_blank">
+    <img src="assets/icons/yticon.png">
+    <span>YouTube</span>
+    </a>
+
+    <a class="social-btn kick" href="https://kick.com/americaesportsdota2" target="_blank">
+    <img src="assets/icons/kickicon.png">
+    <span>Kick</span>
+    </a>
+
+    <a class="social-btn twitch" href="https://www.twitch.tv/americaesportsdota2" target="_blank">
+    <img src="assets/icons/twitchicon.png">
+    <span>Twitch</span>
+    </a>
+</div>
 
 </div>
 
