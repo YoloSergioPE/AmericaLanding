@@ -202,124 +202,6 @@ body {
 .social-btn.kick     { background: rgba(34,197,94,.15); }
 .social-btn.twitch   { background: rgba(168,85,247,.15); }
 
-/* POLL */
-.poll {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-/* === POLL LAYOUT === */
-.poll-results {
-  margin-top: 20px;
-}
-
-.poll-actions {
-  margin-top: 32px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-/* === BOTONES MODERNOS === */
-.poll {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-}
-
-.poll button {
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.12),
-    rgba(255,255,255,0.05)
-  );
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 18px;
-  padding: 22px 18px;
-  color: var(--text);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  backdrop-filter: blur(6px);
-}
-
-/* Hover elegante */
-.poll button:hover {
-  transform: translateY(-3px);
-  background: linear-gradient(
-    180deg,
-    rgba(59,130,246,0.35),
-    rgba(59,130,246,0.15)
-  );
-  box-shadow: 0 12px 30px rgba(59,130,246,0.35);
-}
-
-/* Botones deshabilitados (ya votó) */
-.poll button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-
-.poll button {
-  background: rgba(255,255,255,0.08);
-  border: none;
-  border-radius: 12px;
-  padding: 14px;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.result-fill {
-  height: 14px;
-  border-radius: 8px;
-  background: var(--primary);
-}
-
-/* === RESULT BARS === */
-.result-bar {
-  margin-bottom: 14px;
-}
-
-.result-label {
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-  color: var(--text);
-}
-
-.result-track {
-  width: 100%;
-  height: 16px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.result-fill {
-  height: 100%;
-  width: 0%;
-  border-radius: 10px;
-  background: linear-gradient(
-    90deg,
-    rgba(59,130,246,0.9),
-    rgba(59,130,246,0.6)
-  );
-  transition: width 0.6s ease-in-out;
-}
-
-/* Líder destacado */
-.result-fill.leader {
-  background: linear-gradient(
-    90deg,
-    rgba(34,197,94,0.95),
-    rgba(34,197,94,0.6)
-  );
-  box-shadow: 0 0 12px rgba(34,197,94,0.6);
-}
 
 /* ============================= */
 /* VISTAS CREAR / REGISTRO / RETIRO */
@@ -450,34 +332,15 @@ body {
 
 </div>
 
-<!-- 🔥 FIREBASE REALTIME POLL -->
-<script type="module">
-  let lastPollData = null;
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore,
-  doc,
-  onSnapshot,
-  updateDoc,
-  increment
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-/* 🔴 CONFIGURA AQUÍ */
-const firebaseConfig = {
-  apiKey: "AIzaSyBN-6su09Gtltl8-VmpHzziqOLm8De5CLg",
-  authDomain: "america-esports-poll.firebaseapp.com",
-  projectId: "america-esports-poll",
-};
-
-const appFirebase = initializeApp(firebaseConfig);
-const db = getFirestore(appFirebase);
-const pollRef = doc(db, "polls", "grito-parker-2026");
-
+<script >
+ 
 /* CARGA VISTAS */
 window.loadView = function(view, btn) {
   fetch(`views/${view}.html`)
-    .then(r => r.text())
+    .then(r => {
+      if (!r.ok) throw new Error("Vista no encontrada");
+      return r.text();
+    })
     .then(html => {
       const container = document.getElementById("view-container");
       container.innerHTML = html;
@@ -486,11 +349,14 @@ window.loadView = function(view, btn) {
         .forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
 
-      // 🔥 FORZAR RENDER cuando el DOM ya existe
       requestAnimationFrame(() => {
         initAppSelectors();
-          if (lastPollData) renderPoll(lastPollData);
       });
+    })
+    .catch(err => {
+      document.getElementById("view-container").innerHTML =
+        `<div class="card">Error cargando la vista</div>`;
+      console.error(err);
     });
 };
 
@@ -512,78 +378,6 @@ function initAppSelectors() {
 
 loadView("home", document.querySelector(".nav-btn"));
 
-/* ESCUCHA RESULTADOS EN VIVO */
-onSnapshot(pollRef, (docSnap) => {
-  if (!docSnap.exists()) return;
-  lastPollData = docSnap.data();
-  renderPoll(lastPollData);
-});
-
-
-/* VOTAR */
-window.vote = async function(id) {
-  if (localStorage.getItem("voted")) {
-    alert("Ya votaste");
-    return;
-  }
-  await updateDoc(pollRef, { [id]: increment(1) });
-  localStorage.setItem("voted", "true");
-};
-
-/* RENDER 
-function renderPoll(data) {
-  const poll = document.getElementById("poll");
-  const results = document.getElementById("results");
-  if (!poll || !results) return;
-
-  poll.innerHTML = "";
-  results.innerHTML = "";
-
-  ["p1","p2","p3"].forEach(id => {
-    const b = document.createElement("button");
-    b.textContent = id === "p1" ? "Jugador 1" :
-                    id === "p2" ? "Jugador 2" : "Jugador 3";
-
-    if (localStorage.getItem("voted")) {
-      b.disabled = true;
-    } else {
-      b.onclick = () => vote(id);
-    }
-
-    poll.appendChild(b);
-  });
-
-
-  const total = Object.values(data).reduce((a,b)=>a+b,0) || 1;
-  const labels = {
-    p1: "Jugador 1",
-    p2: "Jugador 2",
-    p3: "Jugador 3"
-  };
-
-  const entries = Object.entries(data);
-  const maxVotes = Math.max(...entries.map(e => e[1]));
-
-  entries.forEach(([k,v]) => {
-    const name = labels[k] || k;
-    const percent = Math.round((v / total) * 100);
-    const isLeader = v === maxVotes && v > 0;
-
-     results.innerHTML += `
-      <div class="result-bar">
-        <div class="result-label">${name} · ${v} votos (${percent}%)</div>
-        <div class="result-track">
-          <div class="result-fill ${isLeader ? "leader" : ""}" style="width:${percent}%"></div>
-        </div>
-      </div>
-    `;
-  });
-function resetVote() {
-  localStorage.removeItem("voted");
-  alert("Ya puedes votar otra vez");
-}
-
-}*/
 </script>
 
 </body>
