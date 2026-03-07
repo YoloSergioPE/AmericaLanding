@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Conozcámonos - Marciano</title>
+<title>Conócete - América Esports</title>
 
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/app.css">
@@ -14,57 +15,29 @@
 
 <body>
 
-<section class="hero">
+<div class="overlay"></div>
 
-<div class="hero-content">
+<div class="app">
 
-<div class="brand">
+<div class="header">
 <img src="assets/logo.png">
-<h1>Conozcámonos</h1>
+<h1>América Esports</h1>
 </div>
 
-<p class="subtitle">
-Antes de entrar a la comunidad quiero saber un poco más de ti 👽
-</p>
+<div class="nav">
 
-<form id="formMarciano" class="marciano-form">
-
-<input name="nombre" placeholder="Nombre">
-
-<input name="edad" placeholder="Edad">
-
-<select name="pais" id="pais">
-<option value="">País</option>
-<option>Perú</option>
-<option>Chile</option>
-<option>México</option>
-</select>
-
-<select name="ciudad" id="ciudadPeru" style="display:none">
-<option>Lima</option>
-<option>Arequipa</option>
-<option>Trujillo</option>
-</select>
-
-<select name="distrito" id="distritoLima" style="display:none">
-<option>Miraflores</option>
-<option>San Isidro</option>
-<option>Surco</option>
-</select>
-
-<input name="cuenta" placeholder="Cuenta 1xBet">
-
-<button type="submit" class="btn primary">
-Enviar
-</button>
-
-</form>
+<div class="nav-btn active" onclick="loadView('home', this)">
+<img src="assets/icons/concurso.png">
+<span>Acerca de ti</span>
+</div>
 
 </div>
 
-</section>
+<div id="view-container"></div>
 
-<script src="js/form.js"></script>
+</div>
+
+<script src="js/app.js"></script>
 
 </body>
 </html>
