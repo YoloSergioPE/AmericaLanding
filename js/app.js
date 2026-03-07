@@ -227,7 +227,11 @@ console.error("Error cargando ranking",err);
 
 document.addEventListener("DOMContentLoaded",()=>{
 
-loadView("home",document.querySelector(".nav-btn"));
+const container = document.getElementById("view-container");
+const startView = container?.dataset.start;
+
+if(startView){
+loadView(startView,document.querySelector(".nav-btn"));
+}
 
 });
-
