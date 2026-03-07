@@ -1,0 +1,233 @@
+
+/* ============================= */
+/* CONFIGURACIÓN GLOBAL */
+/* ============================= */
+
+const CONFIG = {
+scriptURL:"https://script.google.com/macros/s/AKfycbz4Lpc8N6YyyTNI6jNM7yO4t_QHAfgEbJfBdiPHRGH2365vFDzY4N_VRv6gxgAEYtLo/exec",
+rankingURL:"https://docs.google.com/spreadsheets/d/1J3xMub8Fzq6fiY8koOl7mq8q9lngOkJ5DBYkyg7Yjpw/gviz/tq?tqx=out:csv&gid=0"
+};
+
+
+/* ============================= */
+/* CARGA DE VISTAS */
+/* ============================= */
+
+async function loadView(view,btn){
+
+try{
+
+const res = await fetch(`views/${view}.html`);
+const html = await res.text();
+
+const container = document.getElementById("view-container");
+container.innerHTML = html;
+
+/* activar botón nav */
+document.querySelectorAll(".nav-btn")
+.forEach(b=>b.classList.remove("active"));
+
+if(btn) btn.classList.add("active");
+
+/* iniciar scripts dependientes */
+initFormLogic();
+loadRanking();
+initAppSelectors();
+
+}catch(err){
+
+console.error(err);
+
+document.getElementById("view-container").innerHTML =
+`<div class="card">Error cargando la vista</div>`;
+
+}
+
+}
+
+
+/* ============================= */
+/* SELECTORES APP (crear cuenta) */
+/* ============================= */
+
+function initAppSelectors(){
+
+const buttons = document.querySelectorAll(".app-btn");
+const contents = document.querySelectorAll(".app-content");
+
+buttons.forEach(btn=>{
+
+btn.onclick=()=>{
+
+buttons.forEach(b=>b.classList.remove("active"));
+contents.forEach(c=>c.classList.remove("active"));
+
+btn.classList.add("active");
+
+document
+.getElementById(btn.dataset.app)
+?.classList.add("active");
+
+};
+
+});
+
+}
+
+
+/* ============================= */
+/* LÓGICA DEL FORMULARIO */
+/* ============================= */
+
+function initFormLogic(){
+
+const form = document.getElementById("formMarciano");
+if(!form) return;
+
+
+/* select dinámico país */
+
+document.addEventListener("change",function(e){
+
+if(e.target.id==="pais"){
+
+const ciudad = document.getElementById("ciudadPeru");
+const distrito = document.getElementById("distritoLima");
+
+if(e.target.value==="Perú"){
+ciudad.style.display="block";
+}else{
+ciudad.style.display="none";
+distrito.style.display="none";
+}
+
+}
+
+
+if(e.target.id==="ciudadPeru"){
+
+const distrito = document.getElementById("distritoLima");
+
+if(e.target.value==="Lima"){
+distrito.style.display="block";
+}else{
+distrito.style.display="none";
+}
+
+}
+
+});
+
+
+/* envio formulario */
+
+form.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const loader = document.getElementById("loaderMarciano");
+const btn = document.getElementById("btnEnviar");
+
+loader.classList.remove("hidden");
+btn.disabled = true;
+
+const formData = new FormData(form);
+
+try{
+
+await fetch(CONFIG.scriptURL,{
+method:"POST",
+body: formData
+});
+
+loader.classList.add("hidden");
+
+alert("👽 Gracias por ser parte de la Comunidad");
+
+form.reset();
+
+/* ocultar selects dinámicos */
+
+const ciudad = document.getElementById("ciudadPeru");
+const distrito = document.getElementById("distritoLima");
+
+if(ciudad) ciudad.style.display="none";
+if(distrito) distrito.style.display="none";
+
+btn.disabled=false;
+
+}catch(err){
+
+loader.classList.add("hidden");
+btn.disabled=false;
+
+alert("Error enviando datos");
+
+}
+
+});
+
+}
+
+
+/* ============================= */
+/* RANKING DESVIADORES */
+/* ============================= */
+
+async function loadRanking(){
+
+const ul = document.getElementById("rankingDesviadores");
+
+if(!ul) return;
+
+try{
+
+const res = await fetch(CONFIG.rankingURL);
+const text = await res.text();
+
+const rows = text.split("\n").slice(1,6);
+
+ul.innerHTML="";
+
+rows.forEach((row,i)=>{
+
+const cols = row.split(",");
+
+const nombre = cols[1];
+const puntos = cols[2];
+
+const medals=["🥇","🥈","🥉","4️⃣","5️⃣"];
+
+const li=document.createElement("li");
+
+li.innerHTML=`
+<div class="rank-card">
+<div class="rank-pos">${medals[i]}</div>
+<div class="rank-name">${nombre}</div>
+<div class="rank-points">${puntos} pts</div>
+</div>
+`;
+
+ul.appendChild(li);
+
+});
+
+}catch(err){
+
+console.error("Error cargando ranking",err);
+
+}
+
+}
+
+
+/* ============================= */
+/* INICIO APP */
+/* ============================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+loadView("home",document.querySelector(".nav-btn"));
+
+});
+
