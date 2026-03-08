@@ -564,3 +564,12 @@ transition:transform .25s ease;
 transform:scale(1.02);
 
 }
+
+/* ============================= */
+/* WRAPPER DE VISTAS */
+/* ============================= */
+
+.view-wrapper{
+max-width:900px;
+margin:0 auto;
+}
