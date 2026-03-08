@@ -392,3 +392,175 @@ display:none;
 50%{opacity:0.3;}
 100%{opacity:1;}
 }
+
+
+
+/* ============================= */
+/* VISTA COMUNIDAD MARCIANO */
+/* ============================= */
+
+.comunidad-hero{
+text-align:center;
+padding-top:10px;
+}
+
+.comunidad-title{
+font-size:32px;
+font-weight:800;
+line-height:1.2;
+margin-bottom:10px;
+letter-spacing:.3px;
+}
+
+.comunidad-sub{
+font-size:15px;
+color:var(--muted);
+max-width:520px;
+margin:0 auto 25px auto;
+}
+/* ============================= */
+/* BOTON COMUNIDAD WHATSAPP */
+/* ============================= */
+
+.whatsapp-btn{
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+
+margin:0 auto;
+
+padding:14px 22px;
+
+background:#25D366;
+color:white;
+
+font-weight:700;
+font-size:15px;
+
+border-radius:14px;
+
+text-decoration:none;
+
+transition:all .25s ease;
+
+box-shadow:0 10px 25px rgba(0,0,0,.45);
+
+}
+
+.whatsapp-btn img{
+width:26px;
+height:26px;
+object-fit:contain;
+}
+
+.whatsapp-btn:hover{
+transform:translateY(-3px) scale(1.03);
+box-shadow:0 14px 35px rgba(0,0,0,.6);
+}
+/* ============================= */
+/* LISTA BENEFICIOS */
+/* ============================= */
+
+.benefit-list{
+list-style:none;
+padding:0;
+margin:0;
+
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.benefit-list li{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+padding:14px;
+
+background:rgba(255,255,255,0.05);
+
+border-radius:12px;
+
+font-weight:500;
+
+transition:.2s;
+
+}
+
+.benefit-list li:hover{
+background:rgba(59,130,246,0.18);
+transform:translateX(4px);
+}
+
+.benefit-icon{
+font-size:20px;
+}
+/* ============================= */
+/* RESPONSIVE COMUNIDAD */
+/* ============================= */
+
+@media(max-width:600px){
+
+.comunidad-title{
+font-size:26px;
+}
+
+.whatsapp-btn{
+width:100%;
+}
+
+}
+
+/* ============================= */
+/* CONTADOR COMUNIDAD */
+/* ============================= */
+
+.comunidad-count{
+
+margin-bottom:18px;
+
+font-size:14px;
+
+color:#9ca3af;
+
+background:rgba(255,255,255,0.05);
+
+padding:8px 14px;
+
+border-radius:20px;
+
+display:inline-block;
+
+}
+
+/* ============================= */
+/* PREVIEW COMUNIDAD */
+/* ============================= */
+
+.comunidad-preview{
+
+margin-top:22px;
+
+}
+
+.comunidad-preview img{
+
+width:100%;
+
+border-radius:18px;
+
+box-shadow:0 12px 35px rgba(0,0,0,0.6);
+
+transition:transform .25s ease;
+
+}
+
+.comunidad-preview img:hover{
+
+transform:scale(1.02);
+
+}
