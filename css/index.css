@@ -130,5 +130,43 @@ body {
     max-width: 320px;
     padding: 18px;
   }
+  .logos{
+    justify-content:center;
+  }
 
+  .logos img{
+    width:110px;
+  }
+
+  .logo-divider{
+    height:50px;
+  }
+}
+
+/* LOGOS HERO */
+
+.logos{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  margin-bottom:40px;
+}
+
+.logos img{
+  width:160px;
+  height:auto;
+  object-fit:contain;
+}
+
+/* separador */
+
+.logo-divider{
+  width:2px;
+  height:70px;
+  background:linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
+  );
 }
