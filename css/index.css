@@ -1,24 +1,35 @@
-body {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(2,6,23,0.95) 0%,
-      rgba(2,6,23,0.92) 35%,
-      rgba(2,6,23,0.75) 55%,
-      rgba(2,6,23,0.35) 70%,
-      rgba(2,6,23,0.1) 100%
-    ),
-    url("../assets/america_dota.png");
+body{
+  background:url("../assets/america_dota.png");
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:65% center;
+  position:relative;
+}
 
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 65% center;
+body::before{
+
+content:"";
+
+position:fixed;
+inset:0;
+
+background:linear-gradient(
+90deg,
+rgba(2,6,23,0.96) 0%,
+rgba(2,6,23,0.92) 35%,
+rgba(2,6,23,0.85) 55%,
+rgba(2,6,23,0.65) 75%,
+rgba(2,6,23,0.55) 100%
+);
+
+z-index:-1;
+
 }
 
 /* HERO */
 
 .hero {
-  min-height: 100vh;
+  min-height:100svh;
   display: flex;
   align-items: center;
   padding: 80px;
@@ -78,20 +89,20 @@ body {
 
 @media (max-width: 900px) {
 
-  body {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(2,6,23,0.96) 0%,
-        rgba(2,6,23,0.9) 45%,
-        rgba(2,6,23,0.75) 70%,
-        rgba(2,6,23,0.4) 100%
-      ),
-      url("../assets/america_dota_mobile.png");
+  body{
+    background:url("../assets/america_dota_mobile.png");
+    background-size:cover;
+    background-position:center top;
+  }
 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center top;
+  body::before{
+    background:linear-gradient(
+    180deg,
+    rgba(2,6,23,0.97) 0%,
+    rgba(2,6,23,0.94) 40%,
+    rgba(2,6,23,0.88) 70%,
+    rgba(2,6,23,0.8) 100%
+    );
   }
 
   .hero {
