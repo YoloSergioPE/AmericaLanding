@@ -22,9 +22,11 @@ body {
 }
 
 /* HEADER */
+
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* separa izquierda y derecha */
   gap: 16px;
   margin-bottom: 28px;
   padding: 16px 20px;
@@ -32,6 +34,12 @@ body {
   background: rgba(20,25,45,0.75);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.08);
+}
+
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
 }
 
 .header img {
@@ -48,6 +56,26 @@ body {
   content: " Comunidad del Marciano";
   color: var(--primary);
 }
+
+/* BOTON VOLVER AL INICIO */
+
+.back-home{
+  padding:10px 16px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  text-decoration:none;
+  color:white;
+  font-weight:600;
+  font-size:13px;
+  transition:all .2s ease;
+}
+
+.back-home:hover{
+  background:rgba(59,130,246,0.25);
+  transform:translateY(-2px);
+}
+
 
 /* NAV */
 .nav {
@@ -291,6 +319,16 @@ margin-top:20px;
 grid-template-columns:1fr;
 }
 }
+
+@media(max-width:600px){
+
+.back-home{
+  font-size:12px;
+  padding:8px 12px;
+}
+
+}
+
 /* FORMULARIO MARCIANO */
 
 .marciano-form{
