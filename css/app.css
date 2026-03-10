@@ -34,6 +34,7 @@ body {
   background: rgba(20,25,45,0.75);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.08);
+  position:relative;
 }
 
 .header-left{
@@ -57,26 +58,48 @@ body {
   color: var(--primary);
 }
 
-/* BOTON VOLVER AL INICIO */
-
+/*- BOTON HOME HEADER-*/
 .back-home{
-  padding:10px 16px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  text-decoration:none;
-  color:white;
-  font-weight:600;
-  font-size:13px;
-  transition:all .2s ease;
+
+display:flex;
+align-items:center;
+gap:8px;
+margin-left:auto;
+padding:10px 16px;
+
+border-radius:12px;
+
+background:rgba(59,130,246,0.15);
+border:1px solid rgba(59,130,246,0.35);
+
+color:white;
+text-decoration:none;
+
+font-size:14px;
+font-weight:600;
+
+transition:all .25s ease;
+
+box-shadow:0 4px 12px rgba(0,0,0,.35);
+
 }
 
+/* icono */
+.back-home::before{
+content:"⬅";
+font-size:14px;
+}
+
+/* hover */
 .back-home:hover{
-  background:rgba(59,130,246,0.25);
-  transform:translateY(-2px);
+
+background:rgba(59,130,246,0.35);
+
+transform:translateY(-2px);
+
+box-shadow:0 8px 20px rgba(0,0,0,.45);
+
 }
-
-
 /* NAV */
 .nav {
   display: grid;
