@@ -349,7 +349,9 @@ grid-template-columns:1fr;
   font-size:12px;
   padding:8px 12px;
 }
-
+.promo-content{
+font-size:13px;
+}
 }
 
 /* FORMULARIO MARCIANO */
@@ -633,4 +635,47 @@ transform:scale(1.02);
 .view-wrapper{
 max-width:1200px;
 margin:0 auto;
+}
+
+/* ============================= */
+/* PROMO AUSPICIADOR */
+/* ============================= */
+
+.promo-banner{
+
+margin-bottom:22px;
+
+padding:14px 18px;
+
+border-radius:14px;
+
+background:linear-gradient(
+  180deg,
+  rgba(59,130,246,0.18),
+  rgba(59,130,246,0.08)
+);
+
+border:1px solid rgba(59,130,246,0.35);
+
+box-shadow:0 10px 25px rgba(0,0,0,.35);
+
+}
+
+.promo-content{
+text-align:center;
+font-size:14px;
+font-weight:500;
+color:#cbd5f5;
+line-height:1.5;
+}
+
+.promo-code{
+color:#60a5fa;
+font-weight:800;
+letter-spacing:.5px;
+}
+
+.promo-money{
+color:#22c55e;
+font-weight:800;
 }
